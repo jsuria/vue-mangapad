@@ -2,9 +2,9 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="invoices"
       :options.sync="options"
-      :server-items-length="totalDesserts"
+      :server-items-length="totalInvoices"
       :loading="loading"
       class="elevation-1"
     ></v-data-table>
