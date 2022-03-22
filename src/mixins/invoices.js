@@ -1,13 +1,17 @@
 import service from "@/services/fake.invoices.api"
-import data from "@/services/fake.invoices.data.json"
+import jsonData from "@/services/fake.invoices.data.json"
 
 export default {
     data () {
       return {
         totalInvoices: 0,
+        search:'',
         invoices: [],
         loading: true,
-        options: {},
+        pagination: {},
+        filters:[
+
+        ],
         headers: [
           {
             text: 'Receipt Code',
@@ -29,32 +33,56 @@ export default {
         ],
       }
     },
+
+    computed: {
+      params(nv) {
+          console.log(nv)
+          return {
+              ...this.pagination,
+              query: this.search
+          };
+      }
+    },
+
     watch: {
-      options: {
-        handler () {
-          this.getDataFromApi()
+      // Watch for changes on the params property
+      params: {
+        handler() {
+            this.getDataFromApi()
         },
-        deep: true,
-      },
+        deep: true  // include object properties
+      }
     },
     methods: {
-      getDataFromApi () {
+      async getDataFromApi () {
         this.loading = true
-        this.fakeApiCall().then(data => {
+        return this.fakeApiCall().then(data => {
           this.invoices = data.items
           this.totalInvoices = data.total
           this.loading = false
         })
       },
       /**
-       * In a real application this would be a call to fetch() or axios.get()
+       * Simulated service only. Use fetch() or axios methods for real apps
        */
-      fakeApiCall () {
-        
-        return service(this.options, data)
-    
+      async fakeApiCall () {
+        return service(this.pagination, jsonData, this.search)
       },
-      
+    },
 
+    mounted() {
+      // Calling the pseudo service directly
+      try {
+        this.fakeApiCall().then(data => {
+          this.invoices = data.items;
+          this.totalInvoices = data.total;
+          this.loading = false
+      });
+        
+
+      } catch(err) {
+          console.log(err)
+      }
+      
     },
   }

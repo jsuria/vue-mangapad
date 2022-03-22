@@ -42,7 +42,7 @@
 
       firstName: {
         validation:{
-          name: "firstName",
+          name: "First Name",
           rules: "required|max:10"
         },
         field:{
@@ -55,7 +55,7 @@
 
       lastName: {
         validation:{
-          name: "lastName",
+          name: "Last Name",
           rules: "required|max:10"
         },
         field:{
@@ -68,7 +68,7 @@
 
       phoneNumber: {
         validation:{
-          name: "phoneNumber",
+          name: "Phone Number",
           rules: {
             required: true,
             digits: 7,
@@ -85,7 +85,7 @@
 
       email: {
         validation:{
-          name: "email",
+          name: "E-mail",
           rules: "required|email"
         },
         field:{
@@ -97,12 +97,12 @@
 
       cardHolder: {
         validation:{
-          name: "cardHolder",
+          name: "Card Holder",
           rules: "required|max:30"
         },
         field:{
           counter: 30,
-          label: "Last Name",
+          label: "Card Holder",
           isRequired: true,
           model: null
         }
@@ -111,7 +111,7 @@
       // Visa and Mastercard only
       cardNumber: {
         validation:{
-          name: "cardNumber",
+          name: "Card Number",
           rules: {
             required: true,
             digits: 12,
@@ -127,7 +127,7 @@
 
       validThrough: {
         validation:{
-          name: "validThrough",
+          name: "Valid Through",
           rules: "required"
         },
         field:{
@@ -139,7 +139,7 @@
 
       cvvNumber: {
         validation:{
-          name: "cvvNumber",
+          name: "CVV",
           rules: {
             required: true,
             digits: 7,
@@ -148,7 +148,7 @@
         },
         field:{
           counter: 7,
-          label: "Phone Number",
+          label: "CVV",
           isRequired: true,
           model: null
         }

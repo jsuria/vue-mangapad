@@ -1,9 +1,24 @@
- const service = (dataOption, dataItems) => {
-     return new Promise((resolve, reject) => {
-        const { sortBy, sortDesc, page, itemsPerPage } = dataOption
+ const service = (dataOption, dataItems, dataSearch) => {
+     return new Promise((resolve) => {
+        const { 
+            sortBy, 
+            sortDesc, 
+            page, 
+            itemsPerPage } = dataOption
+
+        let search = dataSearch.trim().toLowerCase( )
 
         let items = dataItems
         const total = items.length
+
+        if (search) {
+            items = items.filter(item => {
+                return Object.values(item)
+                    .join(",")
+                    .toLowerCase()
+                    .includes(search);
+            });
+        }
 
         if (sortBy.length === 1 && sortDesc.length === 1) {
             items = items.sort((a, b) => {

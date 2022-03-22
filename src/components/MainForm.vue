@@ -1,27 +1,17 @@
 <template>
-  <v-app id="inspire">
-    <v-content>
-      <v-container fluid fill-height>
-        <v-layout align-center justify-center>
-          <v-flex xs12 sm8 md4>
-            <v-card class="elevation-12">
-                <v-toolbar dark color="primary">
-                    <v-toolbar-title>Checkout Form</v-toolbar-title>
-                </v-toolbar>
-
-                <v-card-text>
-                    <CheckoutForm></CheckoutForm>
-                </v-card-text>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-content>
-  </v-app>
+     <div class="d-flex flex-row justify-center py-4">
+        <CheckoutForm 
+            class="flex-grow-1 mx-15"
+        ></CheckoutForm>
+        <CheckoutItem
+            class="flex-grow-1 mx-15 pr-10"
+        ></CheckoutItem>    
+    </div>
 </template>
 
 <script>
   import CheckoutForm from '@/components/CheckoutForm'
+import CheckoutItem from './CheckoutItem.vue'
 
   export default {
     name: "main-form",
@@ -30,7 +20,8 @@
       drawer: null
     }),
     components:{
-        CheckoutForm
+        CheckoutForm,
+        CheckoutItem
     },
     props: {
       source: String

@@ -1,32 +1,84 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
-  </div>
+  
+  <v-app id="app">
+    <v-card
+      class="mx-auto mt-4 overflow-hidden"
+      height="auto"
+      width="95%"
+      elevation="2"
+    >
+      <v-app-bar 
+          elevation="0"
+          dark 
+          color="deep-purple accent-4">
+          <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+          <v-toolbar-title>Mangapad E-Comics</v-toolbar-title>
+      </v-app-bar>
+
+      <v-navigation-drawer
+        v-model="drawer"
+        temporary
+        app
+      >
+        <v-list
+          nav
+        >
+          <v-list-item-group
+            v-model="group"
+            active-class="deep-purple--text text--accent-4"
+            class="pt-10 pl-5"
+          >
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-home</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title class="text-left">
+                <router-link to="/">Home</router-link>
+              </v-list-item-title>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-account</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title class="text-left">
+                <router-link to="/invoices">Invoices</router-link>
+              </v-list-item-title>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-navigation-drawer>
+
+      <router-view></router-view>
+
+    </v-card>
+
+  </v-app>
 </template>
+
+<script>
+  export default {
+    data: () => ({
+      drawer: false,
+      group: null,
+    }),
+  }
+</script>
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
 
   a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+    text-decoration: none;
+    color: #70859b;
   }
 }
+
+
+
 </style>
