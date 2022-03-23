@@ -93,12 +93,21 @@
           </div>
 
           <div class="d-flex flex-row">
+
+            <div class="pa-2 flex-shrink-1">
+              <v-select
+                  v-model="cardType"
+                  label="Card Type"
+                  :items="['Visa','Mastercard']"
+              ></v-select>
+            </div>
+            
             <!-- CARD NUMBER -->
             <validation-provider
               class="pa-2 flex-grow-1"
               v-slot="{ errors }"
               :name="cardNumber.validation.name"
-              :rules="cardNumber.validation.rules"
+              :rules="cardTypeRegex"
             >
               <v-text-field
                 v-model="cardNumber.field.model"
@@ -122,6 +131,10 @@
                 :required="cvvNumber.field.label"
               ></v-text-field>
             </validation-provider>
+
+            <div class="pa-2 flex-shrink-1">
+                <MonthPicker></MonthPicker>
+            </div> 
           </div>
           
           <div class="d-flex flex-row">
@@ -145,10 +158,10 @@
 
 <script>
 import checkoutform from '@/mixins/checkoutform'
-//import MonthPicker from './MonthPicker.vue'
+import MonthPicker from '@/components/MonthPicker.vue'
 
 export default {
-    //components: { Monthpicker },
+    components: { MonthPicker },
     mixins: [checkoutform]
 }
 </script>

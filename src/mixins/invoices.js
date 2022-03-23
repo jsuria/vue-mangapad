@@ -20,6 +20,7 @@ export default {
             text: 'Paid At',
             sortable: true,
             value: 'paid_at',
+            formatter: this.customColumnDate
           },
 
           {
@@ -59,6 +60,12 @@ export default {
           options: this.pagination, 
           search: this.search
         })
+      },
+
+      customColumnDate(value){
+        let date = new Date(value)
+            
+        return date.toDateString() + " " + new Date(value).toLocaleTimeString()
       }
     },
 

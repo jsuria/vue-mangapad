@@ -12,7 +12,7 @@
         <template v-slot:activator="{ on, attrs }">
           <v-text-field
             v-model="date"
-            label="Picker in menu"
+            label="Valid through"
             prepend-icon="mdi-calendar"
             readonly
             v-bind="attrs"
@@ -50,5 +50,23 @@
       date: new Date().toISOString().substr(0, 7),
       menu: false,
     }),
+
+    computed:{
+
+      ccExpiryDate:{
+        get: function(){
+          try {
+              return new Date((new Date()).setFullYear((new Date()).getFullYear() + 3));
+          } catch(err) {
+              return this.date
+          }
+            
+        },
+        set: function(newValue){
+            this.date = newValue
+        }
+
+      }
+    }
   }
 </script>

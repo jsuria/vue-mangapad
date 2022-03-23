@@ -35,11 +35,21 @@
     },
     data: () => ({
 
-      regexVisa: "^4[0-9]{12}(?:[0-9]{3})?$",
-      regexMastercard: "^5[1-5][0-9]{14}$|^2(?:2(?:2[1-9]|[3-9][0-9])|[3-6][0-9][0-9]|7(?:[01][0-9]|20))[0-9]{12}$",
+      regexRulesVisa: {
+        required: true,
+        regex: "^4[0-9]{12}(?:[0-9]{3})?$"
+      },
+
+      regexRulesMastercard: {
+        required: true,
+        regex: "^5[1-5][0-9]{14}$|^2(?:2(?:2[1-9]|[3-9][0-9])|[3-6][0-9][0-9]|7(?:[01][0-9]|20))[0-9]{12}$"
+      },
+
       prefixesMasterCard: ["5","2"],
       prefixesVisa:["4"],
 
+      cardType: 'Visa',
+      
       firstName: {
         validation:{
           name: "First Name",
@@ -71,12 +81,12 @@
           name: "Phone Number",
           rules: {
             required: true,
-            digits: 7,
-            regex: '^(71|72|74|76|81|82|84|85|86|87|88|89)\\d{5}$'
+            digits: 9,
+            regex: '^(71|72|74|76|81|82|84|85|86|87|88|89)\\d{7}$'
           }
         },
         field:{
-          counter: 7,
+          counter: 9,
           label: "Phone Number",
           isRequired: true,
           model: null
@@ -142,28 +152,18 @@
           name: "CVV",
           rules: {
             required: true,
-            digits: 7,
-            regex: '^[0-9]{3, 4}$'
+            digits: 3
           }
         },
         field:{
-          counter: 7,
+          counter: 3,
           label: "CVV",
           isRequired: true,
           model: null
         }
       },
     
-      /* select: null,
-      items: [
-        'Item 1',
-        'Item 2',
-        'Item 3',
-        'Item 4',
-      ],
-      checkbox: null, */
     }),
-
 
     methods: {
       submit () {
@@ -180,12 +180,9 @@
     },
 
     computed:{
-        isCardVisa(){
-          return this.prefixesVisa.includes((this.cardNumber.field.value)[0])
-        },
-
-        isCardMastercard(){
-          return this.prefixesMasterCard.includes((this.cardNumber.field.value)[0])
+       
+        cardTypeRegex(){
+          return this.cardType == 'Visa' ? this.regexRulesVisa : this.regexRulesMastercard
         }
         
     }

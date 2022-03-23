@@ -21,7 +21,19 @@
           :server-items-length="invoicesTotal"
           :loading="invoicesLoading"
           class="elevation-0 mx-10 mt-4"
-        ></v-data-table>
+        >
+          <!-- eslint-disable -->
+          <template 
+            v-for="header in headers.filter((header) =>
+                    header.hasOwnProperty('formatter')
+              )"
+            v-slot:[`item.${header.value}`]="{ header,value }">
+
+              <span>{{ header.formatter(value) }}</span>
+          </template>
+          <!--eslint-enable-->
+        
+        </v-data-table>
       </div>
     
     
