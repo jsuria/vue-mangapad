@@ -1,4 +1,6 @@
- const service = (dataOption, dataItems, dataSearch) => {
+import sortTable from "@/helpers/sort-table"
+
+const service = (dataOption, dataItems, dataSearch) => {
      return new Promise((resolve) => {
         const { 
             sortBy, 
@@ -6,35 +8,32 @@
             page, 
             itemsPerPage } = dataOption
 
-        let search = dataSearch.trim().toLowerCase( )
-
+        let search = null
+        
+        try {
+            search = dataSearch.trim().toLowerCase()
+        } catch(err) {
+            console.log(err)
+            search = false
+        }
+        
         let items = dataItems
-        const total = items.length
+        let total = items.length
 
-        if (search) {
-            items = items.filter(item => {
+        if(search){
+            // Keyword search            
+            let matches = items.filter(item => {
                 return Object.values(item)
                     .join(",")
                     .toLowerCase()
                     .includes(search);
-            });
-        }
+            });    
 
-        if (sortBy.length === 1 && sortDesc.length === 1) {
-            items = items.sort((a, b) => {
-                const sortA = a[sortBy[0]]
-                const sortB = b[sortBy[0]]
+            total = matches.length
+            items = sortTable(sortBy, sortDesc, matches)
 
-                if (sortDesc[0]) {
-                    if (sortA < sortB) return 1
-                    if (sortA > sortB) return -1
-                    return 0
-                } else {
-                    if (sortA < sortB) return -1
-                    if (sortA > sortB) return 1
-                    return 0
-                }
-            })
+        } else {
+            items = sortTable(sortBy, sortDesc, items)
         }
 
         if (itemsPerPage > 0) {

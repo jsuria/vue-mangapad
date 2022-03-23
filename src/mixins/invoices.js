@@ -1,5 +1,4 @@
-import service from "@/services/fake.invoices.api"
-import jsonData from "@/services/fake.invoices.data.json"
+import { mapActions, mapGetters } from "vuex"
 
 export default {
     data () {
@@ -9,9 +8,7 @@ export default {
         invoices: [],
         loading: true,
         pagination: {},
-        filters:[
-
-        ],
+       
         headers: [
           {
             text: 'Receipt Code',
@@ -35,6 +32,8 @@ export default {
     },
 
     computed: {
+      ...mapGetters(["invoicesList","invoicesLoading","invoicesTotal"]),
+
       params(nv) {
           console.log(nv)
           return {
@@ -48,41 +47,24 @@ export default {
       // Watch for changes on the params property
       params: {
         handler() {
-            this.getDataFromApi()
+            this.doSearch()
         },
         deep: true  // include object properties
       }
     },
     methods: {
-      async getDataFromApi () {
-        this.loading = true
-        return this.fakeApiCall().then(data => {
-          this.invoices = data.items
-          this.totalInvoices = data.total
-          this.loading = false
+      ...mapActions(["searchKeywords","loadInvoices"]),
+      async doSearch() {
+        await this.searchKeywords({
+          options: this.pagination, 
+          search: this.search
         })
-      },
-      /**
-       * Simulated service only. Use fetch() or axios methods for real apps
-       */
-      async fakeApiCall () {
-        return service(this.pagination, jsonData, this.search)
-      },
+      }
     },
 
     mounted() {
       // Calling the pseudo service directly
-      try {
-        this.fakeApiCall().then(data => {
-          this.invoices = data.items;
-          this.totalInvoices = data.total;
-          this.loading = false
-      });
-        
-
-      } catch(err) {
-          console.log(err)
-      }
+      this.loadInvoices(this.pagination)
       
     },
   }

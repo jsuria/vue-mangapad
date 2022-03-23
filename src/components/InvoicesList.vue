@@ -16,10 +16,10 @@
 
         <v-data-table
           :headers="headers"
-          :items="invoices"
+          :items="invoicesList"
           :options.sync="pagination"
-          :server-items-length="totalInvoices"
-          :loading="loading"
+          :server-items-length="invoicesTotal"
+          :loading="invoicesLoading"
           class="elevation-0 mx-10 mt-4"
         ></v-data-table>
       </div>

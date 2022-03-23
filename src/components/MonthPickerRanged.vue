@@ -3,7 +3,7 @@
         ref="menu"
         v-model="menu"
         :close-on-content-click="false"
-        :return-value.sync="dates"
+        :return-value.sync="dateRangeText"
         transition="scale-transition"
         offset-y
         max-width="290px"
@@ -20,7 +20,7 @@
           ></v-text-field>
         </template>
         <v-date-picker
-           v-model="dates"
+           v-model="dateMonthRange"
               type="month"
               no-title
               scrollable
@@ -37,7 +37,7 @@
           <v-btn
             text
             color="primary"
-            @click="$refs.menu.save(date)"
+            @click="$refs.menu.save(dateMonthRange)"
           >
             OK
           </v-btn>
@@ -46,17 +46,71 @@
 </template>
 
 <script>
+  import { mapActions, mapGetters } from "vuex"
+
   export default {
     name: 'MonthPickerRanged',
     data: () => ({
-      dates: [new Date().toISOString().substr(0, 7)],
+      dateMonthRange: [],
       menu: false,
     }),
 
     computed: {
-      dateRangeText () {
-        return this.dates.join(' - ')
+      ...mapGetters(["pageOptions"]),
+
+      pagination:{
+        get: function(){
+          return this.pageOptions
+        }
       },
+
+      dateRangeText:{
+        get: function () {
+          try {
+            return this.dateMonthRange.join(' ~ ')
+          } catch(err) {
+            return ''
+          }
+        },
+        set: function (newValue) {
+          try {
+            console.log(newValue)
+            this.dateMonthRange = newValue
+          } catch(err) {
+            this.dateMonthRange = []
+          }
+        }
+
+      },
+
+      params(nv) {
+          console.log(nv)
+          return {
+              ...this.pagination,
+              query: this.dateRangeText
+          };
+      }
     },
+
+    watch: {
+      // Watch for changes on the params property
+      params: {
+        handler() {
+            this.doDateRangeSearch()
+        },
+        deep: true  // include object properties
+      }
+    },
+
+    methods:{
+      ...mapActions(["searchDateRange"]),
+      async doDateRangeSearch(){
+
+        await this.searchDateRange({
+          options: this.pagination,
+          search: this.dateRangeText
+        })
+      }
+    }
   }
 </script>

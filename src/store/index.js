@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import SearchModule from '@/store/modules/search-module'
 
 Vue.use(Vuex)
 
@@ -11,7 +12,7 @@ const store = new Vuex.Store({
     actions: {
     },
     modules: {
-      
+      SearchModule
     }
 })
 
