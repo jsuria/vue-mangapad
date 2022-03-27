@@ -1,6 +1,6 @@
 import sortTable from "@/helpers/sort-table"
 
-const service_datesearch = (dataOption, dataItems, dataSearch) => {
+const serviceDateSearch = (dataOption, dataItems, dataSearch) => {
     return new Promise((resolve) => {
        const { 
            sortBy, 
@@ -8,7 +8,13 @@ const service_datesearch = (dataOption, dataItems, dataSearch) => {
            page, 
            itemsPerPage } = dataOption
 
-       let search = dataSearch.trim().toLowerCase()
+       let search = null
+
+       try {
+            search = dataSearch.trim().toLowerCase()  
+       } catch(e) {
+            search = ""
+       }
 
        let items = dataItems
 
@@ -53,4 +59,4 @@ const service_datesearch = (dataOption, dataItems, dataSearch) => {
    })
 }   
 
-export default service_datesearch
+export default serviceDateSearch

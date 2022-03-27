@@ -30,14 +30,14 @@
           <v-btn
             text
             color="primary"
-            @click="menu = false"
+            @click="clearDatepicker(); menu = false; "
           >
             Cancel
           </v-btn>
           <v-btn
             text
             color="primary"
-            @click="$refs.menu.save(dateMonthRange)"
+            @click="$refs.menu.save(dateMonthRange); doDateRangeSearch()"
           >
             OK
           </v-btn>
@@ -66,11 +66,8 @@
 
       dateRangeText:{
         get: function () {
-          try {
-            return this.dateMonthRange.join(' ~ ')
-          } catch(err) {
-            return ''
-          }
+
+          return (this.dateMonthRange.length == 2) ? this.dateMonthRange.join(' ~ ') : ''
         },
         set: function (newValue) {
           try {
@@ -87,12 +84,13 @@
           console.log(nv)
           return {
               ...this.pagination,
-              query: this.dateRangeText
+              //query: this.dateRangeText
+              query: this.dateMonthRange
           };
       }
     },
 
-    watch: {
+   /*watch: {
       // Watch for changes on the params property
       params: {
         handler() {
@@ -100,7 +98,7 @@
         },
         deep: true  // include object properties
       }
-    },
+    }, */
 
     methods:{
       ...mapActions(["searchDateRange"]),
@@ -110,6 +108,11 @@
           options: this.pagination,
           search: this.dateRangeText
         })
+      },
+
+      clearDatepicker(){
+        this.dateMonthRange = []
+        this.dateRangeText = ''
       }
     }
   }

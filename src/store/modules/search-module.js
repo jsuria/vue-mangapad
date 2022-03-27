@@ -1,5 +1,5 @@
 import service from "@/services/fake.invoices.api"
-import service_datesearch from "@/services/fake.invoices.datesearch.api";
+import serviceDateSearch from "@/services/fake.invoices.datesearch.api";
 import jsonData from "@/services/fake.invoices.data.json"
 
 const state = { 
@@ -44,7 +44,7 @@ const actions = {
 
     async searchDateRange({commit}, dataVars){  
         commit("loadingToggle", true)
-        await service_datesearch(dataVars.options, jsonData, dataVars.search).then(data => {
+        await serviceDateSearch(dataVars.options, jsonData, dataVars.search).then(data => {
           commit("dateSearch",{
              inv: data.items,
              ttl: data.total
