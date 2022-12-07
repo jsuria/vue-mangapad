@@ -1,17 +1,17 @@
 <template>
-  <div className="home">
-    <MainForm />
+  <div>
+        <ContactUs />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import MainForm from '@/components/MainForm.vue';
+import ContactUs from '@/components/ContactUs.vue';
 
 export default Vue.extend({
   name: 'HomeView',
   components: {
-    MainForm,
+    ContactUs,
   },
 });
 </script>

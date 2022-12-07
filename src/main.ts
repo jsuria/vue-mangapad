@@ -5,6 +5,9 @@ import store from './store'
 import './plugins/vee-validate.js'
 import router from './router'
 
+import ReactWrapper from '@/components/migration/ReactWrapper.vue'
+Vue.component('ReactWrapper', ReactWrapper)
+
 Vue.config.productionTip = false
 
 new Vue({

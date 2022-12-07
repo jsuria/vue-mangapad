@@ -9,4 +9,5 @@ const opts = {
   }
 }
 
-export default new Vuetify(opts)
+const vtify =  new Vuetify(opts)
+export default vtify

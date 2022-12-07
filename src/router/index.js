@@ -8,17 +8,34 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    meta:{
+      layout: 'AppLayoutMain'
+    }
   },
   {
     path: '/invoices',
     name: 'invoices',
-    component: () => import(/* webpackChunkName: "invoices" */ '../views/InvoiceView.vue')
+    component: () => import(/* webpackChunkName: "invoices" */ '../views/InvoiceView.vue'),
+    meta:{
+      layout: 'AppLayoutMain'
+    }
   },
   {
     path: '/checkout',
     name: 'checkout',
-    component: () => import(/* webpackChunkName: "checkout" */ '../views/CheckoutView.vue')
+    component: () => import(/* webpackChunkName: "checkout" */ '../views/CheckoutView.vue'),
+    meta:{
+      layout: 'AppLayoutMain'
+    }
+  },
+  {
+    path: '/contact-us',
+    name: 'contact-us',
+    component: () => import(/* webpackChunkName: "checkout" */ '../views/ContactFormView.vue'),
+    meta:{
+      layout: 'AppLayoutDefault'
+    }
   }
 ]
 
